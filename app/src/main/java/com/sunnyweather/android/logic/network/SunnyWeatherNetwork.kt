@@ -11,10 +11,14 @@ import kotlin.coroutines.suspendCoroutine
 
 object SunnyWeatherNetwork {
 
-    private val placeService = ServiceCreator.create<PlaceService>() //动态代理接口
+    private val placeService = ServiceCreator.create<PlaceService>() //搜索位置 动态代理接口
+    private val weatherService = ServiceCreator.create<WeahterService>() //天气 动态代理接口
 
     suspend fun searchPlaces(query:String) = placeService.searchPlaces(query).await() //直接搜索位置数据
 
+    suspend fun getDailyWeather(lng:String,lat:String) = weatherService.getDailyWeather(lng,lat).await()
+
+    suspend fun getRealtimeWeather(lng:String,lat:String) = weatherService.getRealtimeWeather(lng,lat).await()
 
     private suspend fun <T> Call<T>.await() : T {
         return suspendCoroutine{ continuation ->
@@ -32,6 +36,5 @@ object SunnyWeatherNetwork {
             })
         }
     }
-
 
 }
