@@ -5,17 +5,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
 import android.widget.Toast
-import androidx.core.view.isGone
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.sunnyweather.android.MainActivity
 import com.sunnyweather.android.R
-import com.sunnyweather.android.logic.model.Weather
-import com.sunnyweather.android.ui.weather.activity_weather
+import com.sunnyweather.android.ui.weather.WeatherActivity
 import kotlinx.android.synthetic.main.fragment_place.*
 
 class PlaceFragment :Fragment() {
@@ -33,9 +31,9 @@ class PlaceFragment :Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        if(viewModel.isPlaceSaved()){
+        if(activity is MainActivity && viewModel.isPlaceSaved()){
             val place = viewModel.getsavedPlace()
-            val intent = Intent(context,activity_weather::class.java).apply {
+            val intent = Intent(context,WeatherActivity::class.java).apply {
                 putExtra("location_lng",place.location.lng)
                 putExtra("location_lat",place.location.lat)
                 putExtra("place_name",place.name)
